@@ -8,12 +8,19 @@
     <Version>0.1.0</Version>
     <Authors>JobPulse</Authors>
     <Description>Reports Hangfire job start/success/failure events to JobPulse for monitoring and alerting.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- No DI container dependency: JobPulseHangfire.Register() builds its own
+         HttpClient and calls GlobalJobFilters.Filters.Add() directly, so
+         Microsoft.Extensions.Http / .DependencyInjection.Abstractions were
+         dead weight in every consumer's dependency tree — removed. -->
     <PackageReference Include="Hangfire.Core" Version="1.8.14" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
